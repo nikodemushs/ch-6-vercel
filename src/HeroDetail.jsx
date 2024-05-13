@@ -28,12 +28,12 @@ import { setDName } from "./redux/reducers/dataReducer2";
 const HeroDetail = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const detail = useSelector((state) => state.data.heroDetail);
-  const name = useSelector((state) => state.data.heroDetail.name);
+  const detail = useSelector((state) => state?.data?.heroDetail);
+  const name = useSelector((state) => state?.data?.heroDetail?.name);
   const heroName = name.split("_").slice(3).join("_");
-  const lore = useSelector((state) => state.data2.lores);
+  const lore = useSelector((state) => state?.data2?.lores);
   const myHeroLore = lore[heroName];
-  const abilities = useSelector((state) => state.data2.abilities);
+  const abilities = useSelector((state) => state?.data2?.abilities);
   // const ability_ids = useSelector((state) => state.data2.ability_ids);
   const heroAbilities = Object.keys(abilities)
     .filter((key) => key.startsWith(heroName))
