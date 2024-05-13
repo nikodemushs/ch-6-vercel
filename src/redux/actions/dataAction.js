@@ -25,10 +25,9 @@ export const getAllHeroes = () => async (dispatch, getState) => {
 export const getDetailHero = () => async (dispatch, getState) => {
   try {
     const id = getState().data.heroId;
+    const heroes = getState().data.heroes;
     console.log("id :>> ", id);
-    const response = await axios.get(`https://api.opendota.com/api/heroStats`);
-    console.log("REDUX response", response.data);
-    const detailHero = response.data.find((hero) => hero.id === id);
+    const detailHero = heroes.find((hero) => hero.id === id);
     console.log("detailHero :>> ", detailHero);
     dispatch(setHeroDetail(detailHero));
   } catch (error) {
