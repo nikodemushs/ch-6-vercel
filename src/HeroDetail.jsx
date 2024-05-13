@@ -30,7 +30,7 @@ const HeroDetail = () => {
   const dispatch = useDispatch();
   const detail = useSelector((state) => state?.data?.heroDetail);
   const name = useSelector((state) => state?.data?.heroDetail?.name);
-  const heroName = name.split("_").slice(3).join("_");
+  const heroName = name?.split("_")?.slice(3)?.join("_");
   const lore = useSelector((state) => state?.data2?.lores);
   const myHeroLore = lore[heroName];
   const abilities = useSelector((state) => state?.data2?.abilities);
