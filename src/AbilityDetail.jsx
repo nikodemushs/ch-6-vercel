@@ -29,21 +29,21 @@ const AbilityDetail = () => {
     >
       <Navbar />
       <div className="flex justify-center items-center h-screen">
-        <div class=" flex flex-col rounded shadow-lg  md:p-10 space-y-4 backdrop-blur-sm bg-black/60 ">
+        <div class="flex flex-col rounded shadow-lg  md:p-10 space-y-4 backdrop-blur-sm bg-black/60">
           <div className="flex container mx-auto text-white">
-            <div className="flex flex-1 items-center space-y-1 ">
-              <div className=" flex items-start">
+            <div className="flex flex-col items-center space-y-1 ">
+              <div className=" flex flex-col items-center">
                 <img
                   src={`https://cdn.cloudflare.steamstatic.com${abilityDetail?.img}`}
                   className="w-auto h-64 rounded-lg flex-shrink-0 "
                   alt={abilityDetail?.dname}
                 />
-              </div>
-              <div className="pl-5 space-y-1 ">
-                <div className="text-3xl font-semibold ">
+                <div className="text-3xl font-semibold pt-5">
                   {abilityDetail?.dname}
                 </div>
-                <div className="text font ">{abilityDetail?.lore}</div>
+                <div className="">{abilityDetail?.lore}</div>
+              </div>
+              <div className="pl-5 space-y-1 ">
                 {abilityDetail?.behavior && (
                   <div className="text font ">
                     Ability : {""}{" "}
@@ -68,7 +68,7 @@ const AbilityDetail = () => {
                   </div>
                 )}
                 {abilityDetail?.desc && (
-                  <div className="text font ">{abilityDetail?.desc}</div>
+                  <div className="text font w-3/5 ">{abilityDetail?.desc}</div>
                 )}
                 {abilityDetail?.mc && (
                   <li>
