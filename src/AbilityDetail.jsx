@@ -41,7 +41,7 @@ const AbilityDetail = () => {
                 <div className="text-3xl font-semibold pt-5">
                   {abilityDetail?.dname}
                 </div>
-                <div className="">{abilityDetail?.lore}</div>
+                <div className="w-3/5 text-center">{abilityDetail?.lore}</div>
               </div>
               <div className="pl-5 space-y-1 ">
                 {abilityDetail?.behavior && (
