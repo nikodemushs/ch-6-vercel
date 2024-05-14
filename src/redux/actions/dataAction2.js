@@ -9,7 +9,8 @@ import {
 export const getLoreHero = () => async (dispatch, getState) => {
   try {
     const response = await axios.get(
-      `https://api.opendota.com/api/constants/hero_lore`
+      `https://api.opendota.com/api/constants/hero_lore
+      `
     );
 
     dispatch(setLores(response.data));
@@ -25,19 +26,20 @@ export const getLoreHero = () => async (dispatch, getState) => {
 export const getHeroAbilities = () => async (dispatch, getState) => {
   try {
     const response = await axios.get(
-      `https://api.opendota.com/api/constants/abilities`
+      `https://api.opendota.com/api/constants/abilitie
+      `
     );
 
     dispatch(setAbilities(response.data));
-    const index = getState().data2.indexError;
-    const name = getState().data.heroDetail?.name;
+    const index = getState().data2?.indexError;
+    const name = getState().data?.heroDetail?.name;
     const heroName = name?.split("_")?.slice(3)?.join("_");
     const heroAbilities = Object.keys(response.data)
-      .filter((key) => key.startsWith(heroName))
-      .map((key) => response.data[key]);
+      ?.filter((key) => key.startsWith(heroName))
+      ?.map((key) => response?.data[key]);
     dispatch(setHeroAbilities(heroAbilities));
 
-    const validAbilities = heroAbilities.filter((_, i) => i !== index);
+    const validAbilities = heroAbilities?.filter((_, i) => i !== index);
     dispatch(setValidAbilities(validAbilities));
   } catch (error) {
     if (axios.isAxiosError(error)) {
@@ -47,5 +49,3 @@ export const getHeroAbilities = () => async (dispatch, getState) => {
     alert(error.message);
   }
 };
-
-

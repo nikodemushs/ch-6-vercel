@@ -11,11 +11,11 @@ import { useDispatch, useSelector } from "react-redux";
 const AbilityDetail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const dname = useSelector((state) => state.data2.dname);
-  console.log("dname :>> ", dname);
+  const imgName = useSelector((state) => state.data2.imgname);
+  console.log("dname :>> ", imgName);
   const abilities = useSelector((state) => state.data2.abilities);
   const abilityDetail = Object.values(abilities).find(
-    (ability) => ability.dname === dname
+    (ability) => ability.img === imgName
   );
   console.log("abilityDetail :>> ", abilityDetail);
 

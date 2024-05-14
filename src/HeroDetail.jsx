@@ -23,11 +23,21 @@ import { GiBrain } from "react-icons/gi";
 import { useDispatch, useSelector } from "react-redux";
 import { getDetailHero } from "./redux/actions/dataAction";
 import { getLoreHero, getHeroAbilities } from "./redux/actions/dataAction2";
-import { setDName, setIndexError } from "./redux/reducers/dataReducer2";
+import {
+  setImgName,
+  setIndexError,
+  resetIndexError,
+} from "./redux/reducers/dataReducer2";
 
 const HeroDetail = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [showFullLore, setShowFullLore] = useState(false);
+
+  const toggleLore = () => {
+    setShowFullLore((prev) => !prev);
+  };
+
   const indexError = useSelector((state) => state?.data2?.indexError);
   console.log("indexError :>> ", indexError);
   const detail = useSelector((state) => state?.data?.heroDetail);
@@ -42,6 +52,11 @@ const HeroDetail = () => {
 
   console.log("heroAbilities :>> ", heroAbilities);
 
+  // useEffect(() => {
+  //   // Dispatch the action to reset indexError when the page changes
+  //   dispatch(resetIndexError());
+  // }, []);
+
   useEffect(() => {
     dispatch(getDetailHero());
   }, []);
@@ -52,7 +67,7 @@ const HeroDetail = () => {
 
   useEffect(() => {
     dispatch(getHeroAbilities());
-  }, []);
+  }, [name]);
 
   const getPrimaryAttributeFullName = (attr) => {
     switch (attr) {
@@ -155,13 +170,14 @@ const HeroDetail = () => {
 
             <div className="grid grid-cols-8 gap-3 mt-3 ml-5 items-center">
               {validAbilities
-                ?.filter((ability) => ability.dname)
+                ?.filter((ability) => ability?.dname)
+                ?.filter((ability) => ability?.attrib)
                 ?.map((ability, index) => (
                   <div
                     key={index}
                     onClick={() => {
                       navigate("/ability-detail");
-                      dispatch(setDName(ability.dname));
+                      dispatch(setImgName(ability?.img));
                     }}
                     className="relative flex flex-col items-center cursor-pointer shadow-lg hover:scale-105 duration-300"
                   >
@@ -170,6 +186,7 @@ const HeroDetail = () => {
                       className="w-18 h-18 object-cover rounded-lg"
                       alt={ability?.dname}
                       onError={() => {
+                        // dispatch(resetIndexError());
                         dispatch(setIndexError(index));
                       }}
                     />
@@ -194,7 +211,30 @@ const HeroDetail = () => {
                 {detail?.localized_name}
               </h1>
             </div>
-            <div className="text-white w-4/5 text-sm pt-2">{myHeroLore}</div>
+            <div>
+              {/* Display only a portion of the lore */}
+              <div className="text-white w-4/5 text-sm pt-2">
+                {showFullLore ? myHeroLore : `${myHeroLore.slice(0, 400)}...`}
+              </div>
+              {/* Render the "Read More" button */}
+              {!showFullLore && (
+                <button
+                  onClick={toggleLore}
+                  className="text-white mt-2 underline cursor-pointer text-sm"
+                >
+                  Read More
+                </button>
+              )}
+              {/* Render the "Read Less" button if full lore is visible */}
+              {showFullLore && (
+                <button
+                  onClick={toggleLore}
+                  className="text-white mt-2 underline cursor-pointer text-sm"
+                >
+                  Read Less
+                </button>
+              )}
+            </div>
 
             <div className="flex space-x-10 font-medium text-sm pt-5">
               <div>

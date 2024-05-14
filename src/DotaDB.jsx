@@ -16,6 +16,7 @@ import { PiArrowsDownUpBold } from "react-icons/pi";
 import { useDispatch, useSelector } from "react-redux";
 import { setHeroId, setSearchTerm } from "./redux/reducers/dataReducer";
 import { getAllHeroes } from "./redux/actions/dataAction";
+import { resetIndexError } from "./redux/reducers/dataReducer2";
 
 const DotaDB = () => {
   const navigate = useNavigate();
@@ -36,6 +37,10 @@ const DotaDB = () => {
   const handleSearch = (event) => {
     dispatch(setSearchTerm(event.target.value));
   };
+
+  useEffect(() => {
+    dispatch(resetIndexError());
+  }, []);
 
   let filteredHeroes = heroes
     .filter((hero) => {
@@ -209,6 +214,8 @@ const DotaDB = () => {
             onClick={() => {
               navigate("/hero-detail");
               dispatch(setHeroId(hero?.id));
+              // dispatch(resetIndexError());
+
               // window.location.reload();
             }}
           >
