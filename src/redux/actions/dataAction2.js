@@ -1,5 +1,9 @@
 import axios from "axios";
-import { setLores, setAbilities, setAbilityId } from "../reducers/dataReducer2";
+import {
+  setLores,
+  setAbilities,
+  setHeroAbilities,
+} from "../reducers/dataReducer2";
 
 export const getLoreHero = () => async (dispatch, getState) => {
   try {
@@ -24,6 +28,13 @@ export const getHeroAbilities = () => async (dispatch, getState) => {
     );
 
     dispatch(setAbilities(response.data));
+    const name = getState().data.heroDetail?.name;
+    const heroName = name?.split("_")?.slice(3)?.join("_");
+    const heroAbilities = Object.keys(response.data)
+      .filter((key) => key.startsWith(heroName))
+      .map((key) => response.data[key]);
+    dispatch(setHeroAbilities(heroAbilities));
+    console.log("heroAbilities REDUX :>> ", heroAbilities);
   } catch (error) {
     if (axios.isAxiosError(error)) {
       alert(error.message);

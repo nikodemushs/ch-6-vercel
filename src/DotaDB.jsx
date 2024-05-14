@@ -209,6 +209,7 @@ const DotaDB = () => {
             onClick={() => {
               navigate("/hero-detail");
               dispatch(setHeroId(hero?.id));
+              // window.location.reload();
             }}
           >
             <img

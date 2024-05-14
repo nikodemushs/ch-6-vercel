@@ -6,6 +6,7 @@ const initialState = {
   abilities: {},
   ability_ids: {},
   dname: "",
+  heroAbilities: [],
 };
 
 const dataSlicer2 = createSlice({
@@ -27,10 +28,19 @@ const dataSlicer2 = createSlice({
     setDName: (state, action) => {
       state.dname = action.payload;
     },
+    setHeroAbilities: (state, action) => {
+      state.heroAbilities = action.payload;
+    },
   },
 });
 
-export const { setLores, setName, setAbilities, setAbilityId, setDName } =
-  dataSlicer2.actions;
+export const {
+  setLores,
+  setName,
+  setAbilities,
+  setAbilityId,
+  setDName,
+  setHeroAbilities,
+} = dataSlicer2.actions;
 
 export default dataSlicer2.reducer;

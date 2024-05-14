@@ -28,16 +28,27 @@ import { setDName } from "./redux/reducers/dataReducer2";
 const HeroDetail = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [validAbilities, setValidAbilities] = useState([]);
+  console.log("validAbilities :>> ", validAbilities);
+  const [indexError, setIndexError] = useState(null);
+  console.log("indexError :>> ", indexError);
   const detail = useSelector((state) => state?.data?.heroDetail);
   const name = useSelector((state) => state?.data?.heroDetail?.name);
   const heroName = name?.split("_")?.slice(3)?.join("_");
   const lore = useSelector((state) => state?.data2?.lores);
   const myHeroLore = lore[heroName];
   const abilities = useSelector((state) => state?.data2?.abilities);
-  // const ability_ids = useSelector((state) => state.data2.ability_ids);
-  const heroAbilities = Object.keys(abilities)
-    .filter((key) => key.startsWith(heroName))
-    .map((key) => abilities[key]);
+  const heroAbilities = useSelector((state) => state?.data2?.heroAbilities);
+
+  useEffect(() => {
+    setValidAbilities(heroAbilities);
+  }, [heroAbilities]);
+
+  const handleImageError = (index) => {
+    setValidAbilities((prevAbilities) =>
+      prevAbilities.filter((_, i) => i !== index)
+    );
+  };
 
   console.log("heroAbilities :>> ", heroAbilities);
 
@@ -153,7 +164,7 @@ const HeroDetail = () => {
             />
 
             <div className="grid grid-cols-8 gap-3 mt-3 ml-5 items-center">
-              {heroAbilities.map((ability, index) => (
+              {validAbilities.map((ability, index) => (
                 <div
                   key={index}
                   onClick={() => {
@@ -166,6 +177,11 @@ const HeroDetail = () => {
                     src={`https://cdn.cloudflare.steamstatic.com${ability?.img}`}
                     className="w-18 h-18 object-cover rounded-lg"
                     alt={ability?.dname}
+                    onError={() => {
+                      handleImageError(index);
+                      setIndexError(index);
+                      // window.location.reload();
+                    }}
                   />
                   <div className="p-4 opacity-0 hover:opacity-100 transition-opacity duration-300 ease-in-out absolute top-0 left-0 right-0 bottom-0 inset-0 flex justify-center items-center bg-black bg-opacity-75 rounded-lg">
                     <p className="text-white text-center text-sm font-semibold">
