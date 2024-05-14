@@ -143,175 +143,173 @@ const HeroDetail = () => {
       }}
     >
       <Navbar />
-      <div className="flex justify-center items-center h-screen">
-        <div class="rounded shadow-lg p-10 space-y-4 backdrop-blur-sm bg-black/60 mt-28">
-          <div className="">
-            <div className="flex pl-10">
+      <div className="flex justify-center items-center h-screen mb-36">
+        <div class="rounded shadow-lg p-10 space-y-4 backdrop-blur-sm bg-black/60  container mx-auto mt-32">
+          <div className="flex pl-10">
+            <img
+              src={`https://cdn.cloudflare.steamstatic.com${detail?.img}`}
+              className="w-auto h-56 rounded-lg flex-shrink-0 "
+              alt={detail?.localized_name}
+            />
+
+            <div className="grid grid-cols-8 gap-3 mt-3 ml-5 items-center">
+              {heroAbilities.map((ability, index) => (
+                <div
+                  key={index}
+                  onClick={() => {
+                    navigate("/ability-detail");
+                    dispatch(setDName(ability.dname));
+                  }}
+                  className="relative flex flex-col items-center cursor-pointer shadow-lg hover:scale-105 duration-300"
+                >
+                  <img
+                    src={`https://cdn.cloudflare.steamstatic.com${ability?.img}`}
+                    className="w-18 h-18 object-cover rounded-lg"
+                    alt={ability?.dname}
+                  />
+                  <div className="p-4 opacity-0 hover:opacity-100 transition-opacity duration-300 ease-in-out absolute top-0 left-0 right-0 bottom-0 inset-0 flex justify-center items-center bg-black bg-opacity-75 rounded-lg">
+                    <p className="text-white text-center text-sm font-semibold">
+                      {ability?.dname}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex flex-col pl-10 pt-5">
+            <div className="flex gap-2 items-center">
               <img
-                src={`https://cdn.cloudflare.steamstatic.com${detail?.img}`}
-                className="w-auto h-56 rounded-lg flex-shrink-0 "
+                src={`https://cdn.cloudflare.steamstatic.com${detail?.icon}`}
+                className="w-auto h-14 object-cover rounded-lg"
                 alt={detail?.localized_name}
               />
-
-              <div className="grid grid-cols-8 gap-3 mt-3 ml-5 items-center">
-                {heroAbilities.map((ability, index) => (
-                  <div
-                    key={index}
-                    onClick={() => {
-                      navigate("/ability-detail");
-                      dispatch(setDName(ability.dname));
-                    }}
-                    className="relative flex flex-col items-center cursor-pointer shadow-lg hover:scale-105 duration-300"
-                  >
-                    <img
-                      src={`https://cdn.cloudflare.steamstatic.com${ability?.img}`}
-                      className="w-18 h-18 object-cover rounded-lg"
-                      alt={ability?.dname}
-                    />
-                    <div className="p-4 opacity-0 hover:opacity-100 transition-opacity duration-300 ease-in-out absolute top-0 left-0 right-0 bottom-0 inset-0 flex justify-center items-center bg-black bg-opacity-75 rounded-lg">
-                      <p className="text-white text-center text-sm font-semibold">
-                        {ability?.dname}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
+              <h1 className="text-3xl font-semibold text-white">
+                {detail?.localized_name}
+              </h1>
             </div>
+            <div className="text-white w-4/5 text-sm pt-2">{myHeroLore}</div>
 
-            <div className="flex flex-col pl-10 pt-5">
-              <div className="flex gap-2 items-center">
-                <img
-                  src={`https://cdn.cloudflare.steamstatic.com${detail?.icon}`}
-                  className="w-auto h-14 object-cover rounded-lg"
-                  alt={detail?.localized_name}
-                />
-                <h1 className="text-3xl font-semibold text-white">
-                  {detail?.localized_name}
-                </h1>
+            <div className="flex space-x-10 font-medium text-sm pt-5">
+              <div>
+                <div className="flex  gap-2">
+                  {detail?.roles && (
+                    <div className="text ">
+                      <span className="text-white">Roles:</span>
+                      <ul className="list-disc ml-6 text-white">
+                        {detail.roles.map((role, index) => (
+                          <li key={index}>{role}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
               </div>
-              <div className="text-white w-4/5 text-sm pt-2">{myHeroLore}</div>
-
-              <div className="flex space-x-10 font-medium text-sm pt-5">
-                <div>
-                  <div className="flex  gap-2">
-                    {detail?.roles && (
-                      <div className="text ">
-                        <span className="text-white">Roles:</span>
-                        <ul className="list-disc ml-6 text-white">
-                          {detail.roles.map((role, index) => (
-                            <li key={index}>{role}</li>
-                          ))}
-                        </ul>
-                      </div>
-                    )}
+              <div>
+                <div className="flex gap-1 items-center">
+                  <div className="text  text-white">
+                    Attack Type : {detail?.attack_type}
+                  </div>
+                  {getAttackTypeIcon(detail?.attack_type)}
+                </div>
+                <div className="flex gap-2">
+                  <TbRulerMeasure size={23} color={"white"} />
+                  <div className="text  text-white">
+                    Attack Range : {detail?.attack_range}
                   </div>
                 </div>
-                <div>
-                  <div className="flex gap-1 items-center">
-                    <div className="text  text-white">
-                      Attack Type : {detail?.attack_type}
-                    </div>
-                    {getAttackTypeIcon(detail?.attack_type)}
-                  </div>
-                  <div className="flex gap-2">
-                    <TbRulerMeasure size={23} color={"white"} />
-                    <div className="text  text-white">
-                      Attack Range : {detail?.attack_range}
-                    </div>
-                  </div>
-                  <div className="flex gap-2">
-                    <GiSpeedometer size={23} color={"white"} />
-                    <div className="text  text-white">
-                      Attack Speed : {detail?.base_attack_time}
-                    </div>
-                  </div>
-                  <div className="flex gap-2">
-                    <PiClockClockwiseBold size={23} color={"white"} />
-                    <div className="text  text-white">
-                      Base Attack Time : {detail?.attack_rate}
-                    </div>
-                  </div>
-                  <div className="flex gap-2">
-                    <FaRunning size={23} color={"white"} />
-                    <div className="flex gap-2 items-center">
-                      <div className="text  text-white">
-                        Move Speed: {detail?.move_speed}
-                      </div>
-                      <IoSunny size={22} color={"white"} />
-                    </div>
-                    <div className="flex gap-2 items-center">
-                      <div className="text  text-white">
-                        / {detail?.move_speed + 30}
-                      </div>
-                      <IoMoonSharp size={19} color={"white"} />
-                    </div>
-                  </div>
-
-                  <div className="flex gap-2">
-                    <FaEye size={23} color={"white"} />
-                    <div className="flex gap-2 items-center">
-                      <div className="text  text-white">
-                        Vision Range: {detail?.day_vision}
-                      </div>
-                      <IoSunny size={22} color={"white"} />
-                    </div>
-                    <div className="flex gap-2 items-center">
-                      <div className="text  text-white">
-                        / {detail?.night_vision}
-                      </div>
-                      <IoMoonSharp size={19} color={"white"} />
-                    </div>
+                <div className="flex gap-2">
+                  <GiSpeedometer size={23} color={"white"} />
+                  <div className="text  text-white">
+                    Attack Speed : {detail?.base_attack_time}
                   </div>
                 </div>
-                <div>
-                  <div className="flex gap-2">
-                    <div className="text  text-white flex items-center">
-                      Primary Attribute :{" "}
-                      {getPrimaryAttributeFullName(detail?.primary_attr)}
-                    </div>
-                    {getPrimaryAttributeIcon(detail?.primary_attr)}
+                <div className="flex gap-2">
+                  <PiClockClockwiseBold size={23} color={"white"} />
+                  <div className="text  text-white">
+                    Base Attack Time : {detail?.attack_rate}
                   </div>
-                  <div className="flex items-center gap-2">
-                    <div
-                      style={{
-                        backgroundColor: "#ebe8e8",
-                        padding: "6px",
-                        borderRadius: "90%",
-                      }}
-                    >
-                      <GiBiceps size={20} color={"red"} />
-                    </div>{" "}
-                    <div className="text text-white flex items-center">
-                      {detail?.base_str} + {detail?.str_gain}
+                </div>
+                <div className="flex gap-2">
+                  <FaRunning size={23} color={"white"} />
+                  <div className="flex gap-2 items-center">
+                    <div className="text  text-white">
+                      Move Speed: {detail?.move_speed}
                     </div>
+                    <IoSunny size={22} color={"white"} />
                   </div>
-                  <div className="flex items-center gap-2 pt-1 ">
-                    <div
-                      style={{
-                        backgroundColor: "#ebe8e8",
-                        padding: "6px",
-                        borderRadius: "90%",
-                      }}
-                    >
-                      <GiWindyStripes size={20} color={"lime"} />
+                  <div className="flex gap-2 items-center">
+                    <div className="text  text-white">
+                      / {detail?.move_speed + 30}
                     </div>
-                    <div className="text  text-white flex items-center">
-                      {detail?.base_agi} + {detail?.agi_gain}
-                    </div>
+                    <IoMoonSharp size={19} color={"white"} />
                   </div>
-                  <div className="flex items-center gap-2 pt-1">
-                    <div
-                      style={{
-                        backgroundColor: "#ebe8e8",
-                        padding: "6px",
-                        borderRadius: "90%",
-                      }}
-                    >
-                      <FaWandMagicSparkles size={20} color={"skyblue"} />
+                </div>
+
+                <div className="flex gap-2">
+                  <FaEye size={23} color={"white"} />
+                  <div className="flex gap-2 items-center">
+                    <div className="text  text-white">
+                      Vision Range: {detail?.day_vision}
                     </div>
-                    <div className="text  text-white flex items-center">
-                      {detail?.base_int} + {detail?.int_gain}
+                    <IoSunny size={22} color={"white"} />
+                  </div>
+                  <div className="flex gap-2 items-center">
+                    <div className="text  text-white">
+                      / {detail?.night_vision}
                     </div>
+                    <IoMoonSharp size={19} color={"white"} />
+                  </div>
+                </div>
+              </div>
+              <div>
+                <div className="flex gap-2">
+                  <div className="text  text-white flex items-center">
+                    Primary Attribute :{" "}
+                    {getPrimaryAttributeFullName(detail?.primary_attr)}
+                  </div>
+                  {getPrimaryAttributeIcon(detail?.primary_attr)}
+                </div>
+                <div className="flex items-center gap-2">
+                  <div
+                    style={{
+                      backgroundColor: "#ebe8e8",
+                      padding: "6px",
+                      borderRadius: "90%",
+                    }}
+                  >
+                    <GiBiceps size={20} color={"red"} />
+                  </div>{" "}
+                  <div className="text text-white flex items-center">
+                    {detail?.base_str} + {detail?.str_gain}
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 pt-1 ">
+                  <div
+                    style={{
+                      backgroundColor: "#ebe8e8",
+                      padding: "6px",
+                      borderRadius: "90%",
+                    }}
+                  >
+                    <GiWindyStripes size={20} color={"lime"} />
+                  </div>
+                  <div className="text  text-white flex items-center">
+                    {detail?.base_agi} + {detail?.agi_gain}
+                  </div>
+                </div>
+                <div className="flex items-center gap-2 pt-1">
+                  <div
+                    style={{
+                      backgroundColor: "#ebe8e8",
+                      padding: "6px",
+                      borderRadius: "90%",
+                    }}
+                  >
+                    <FaWandMagicSparkles size={20} color={"skyblue"} />
+                  </div>
+                  <div className="text  text-white flex items-center">
+                    {detail?.base_int} + {detail?.int_gain}
                   </div>
                 </div>
               </div>
