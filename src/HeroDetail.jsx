@@ -23,32 +23,22 @@ import { GiBrain } from "react-icons/gi";
 import { useDispatch, useSelector } from "react-redux";
 import { getDetailHero } from "./redux/actions/dataAction";
 import { getLoreHero, getHeroAbilities } from "./redux/actions/dataAction2";
-import { setDName } from "./redux/reducers/dataReducer2";
+import { setDName, setIndexError } from "./redux/reducers/dataReducer2";
 
 const HeroDetail = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [validAbilities, setValidAbilities] = useState([]);
-  console.log("validAbilities :>> ", validAbilities);
-  const [indexError, setIndexError] = useState(null);
+  const indexError = useSelector((state) => state?.data2?.indexError);
   console.log("indexError :>> ", indexError);
   const detail = useSelector((state) => state?.data?.heroDetail);
   const name = useSelector((state) => state?.data?.heroDetail?.name);
   const heroName = name?.split("_")?.slice(3)?.join("_");
   const lore = useSelector((state) => state?.data2?.lores);
   const myHeroLore = lore[heroName];
-  const abilities = useSelector((state) => state?.data2?.abilities);
   const heroAbilities = useSelector((state) => state?.data2?.heroAbilities);
+  const validAbilities = useSelector((state) => state?.data2?.validAbilities);
 
-  useEffect(() => {
-    setValidAbilities(heroAbilities);
-  }, [heroAbilities]);
-
-  const handleImageError = (index) => {
-    setValidAbilities((prevAbilities) =>
-      prevAbilities.filter((_, i) => i !== index)
-    );
-  };
+  console.log("validAbilities :>> ", validAbilities);
 
   console.log("heroAbilities :>> ", heroAbilities);
 
@@ -126,7 +116,7 @@ const HeroDetail = () => {
           >
             <FaRecycle size={23} color={"white"} />
           </div>
-        ); // Return null or a default icon if primary attribute is unknown
+        );
     }
   };
 
@@ -141,7 +131,7 @@ const HeroDetail = () => {
       case "Ranged":
         return <GiBowman size={25} color={"white"} />;
       default:
-        return null; // Return null or a default icon if primary attribute is unknown
+        return null;
     }
   };
 
@@ -164,32 +154,32 @@ const HeroDetail = () => {
             />
 
             <div className="grid grid-cols-8 gap-3 mt-3 ml-5 items-center">
-              {validAbilities.map((ability, index) => (
-                <div
-                  key={index}
-                  onClick={() => {
-                    navigate("/ability-detail");
-                    dispatch(setDName(ability.dname));
-                  }}
-                  className="relative flex flex-col items-center cursor-pointer shadow-lg hover:scale-105 duration-300"
-                >
-                  <img
-                    src={`https://cdn.cloudflare.steamstatic.com${ability?.img}`}
-                    className="w-18 h-18 object-cover rounded-lg"
-                    alt={ability?.dname}
-                    onError={() => {
-                      handleImageError(index);
-                      setIndexError(index);
-                      // window.location.reload();
+              {validAbilities
+                .filter((ability) => ability.dname)
+                .map((ability, index) => (
+                  <div
+                    key={index}
+                    onClick={() => {
+                      navigate("/ability-detail");
+                      dispatch(setDName(ability.dname));
                     }}
-                  />
-                  <div className="p-4 opacity-0 hover:opacity-100 transition-opacity duration-300 ease-in-out absolute top-0 left-0 right-0 bottom-0 inset-0 flex justify-center items-center bg-black bg-opacity-75 rounded-lg">
-                    <p className="text-white text-center text-sm font-semibold">
-                      {ability?.dname}
-                    </p>
+                    className="relative flex flex-col items-center cursor-pointer shadow-lg hover:scale-105 duration-300"
+                  >
+                    <img
+                      src={`https://cdn.cloudflare.steamstatic.com${ability?.img}`}
+                      className="w-18 h-18 object-cover rounded-lg"
+                      alt={ability?.dname}
+                      onError={() => {
+                        dispatch(setIndexError(index));
+                      }}
+                    />
+                    <div className="p-4 opacity-0 hover:opacity-100 transition-opacity duration-300 ease-in-out absolute top-0 left-0 right-0 bottom-0 inset-0 flex justify-center items-center bg-black bg-opacity-75 rounded-lg">
+                      <p className="text-white text-center text-sm font-semibold">
+                        {ability?.dname}
+                      </p>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </div>
           </div>
 

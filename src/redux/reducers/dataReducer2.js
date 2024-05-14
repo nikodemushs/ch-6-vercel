@@ -7,6 +7,8 @@ const initialState = {
   ability_ids: {},
   dname: "",
   heroAbilities: [],
+  indexError: null,
+  validAbilities: [],
 };
 
 const dataSlicer2 = createSlice({
@@ -31,6 +33,13 @@ const dataSlicer2 = createSlice({
     setHeroAbilities: (state, action) => {
       state.heroAbilities = action.payload;
     },
+    setIndexError: (state, action) => {
+      console.log("Action Payload:", action.payload); // Log action payload
+      state.indexError = action.payload;
+    },
+    setValidAbilities: (state, action) => {
+      state.validAbilities = action.payload;
+    },
   },
 });
 
@@ -41,6 +50,8 @@ export const {
   setAbilityId,
   setDName,
   setHeroAbilities,
+  setIndexError,
+  setValidAbilities,
 } = dataSlicer2.actions;
 
 export default dataSlicer2.reducer;
