@@ -155,8 +155,8 @@ const HeroDetail = () => {
 
             <div className="grid grid-cols-8 gap-3 mt-3 ml-5 items-center">
               {validAbilities
-                .filter((ability) => ability.dname)
-                .map((ability, index) => (
+                ?.filter((ability) => ability.dname)
+                ?.map((ability, index) => (
                   <div
                     key={index}
                     onClick={() => {
