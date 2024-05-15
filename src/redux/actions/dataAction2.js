@@ -26,7 +26,7 @@ export const getLoreHero = () => async (dispatch, getState) => {
 export const getHeroAbilities = () => async (dispatch, getState) => {
   try {
     const response = await axios.get(
-      `https://api.opendota.com/api/constants/abilitie
+      `https://api.opendota.com/api/constants/abilities
       `
     );
 
