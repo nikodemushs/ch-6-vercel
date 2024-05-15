@@ -10,7 +10,8 @@ import {
 import { data } from "../../Data";
 export const getAllHeroes = () => async (dispatch, getState) => {
   try {
-    const response = await axios.get(`https://api.opendota.com/api/heroStats
+    const response =
+      await axios.get(`https://api.opendota.com/api/heroStats?api_key=b4888f99-95b4-4b8e-80bb-b1871752b696
     `);
     console.log("REDUX response", response.data);
     dispatch(setHeroes(response.data));
@@ -76,7 +77,7 @@ export const getMatchups = () => async (dispatch, getState) => {
     const id = getState().data.heroId;
     console.log("id MATCHUP :>> ", id);
     const response = await axios.get(
-      `https://api.opendota.com/api/heroes/${id}/matchups
+      `https://api.opendota.com/api/heroes/${id}/matchups?api_key=b4888f99-95b4-4b8e-80bb-b1871752b696
       `
     );
     console.log("Matchup Response", response.data);
@@ -92,7 +93,8 @@ export const getMatchups = () => async (dispatch, getState) => {
 
 export const getMatchupDetails = () => async (dispatch, getState) => {
   try {
-    const response = await axios.get(`https://api.opendota.com/api/heroStats
+    const response =
+      await axios.get(`https://api.opendota.com/api/heroStats?api_key=b4888f99-95b4-4b8e-80bb-b1871752b696
     `);
     const heroesMap = {};
     response.data.forEach((hero) => {

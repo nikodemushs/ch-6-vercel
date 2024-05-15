@@ -9,7 +9,7 @@ import {
 export const getLoreHero = () => async (dispatch, getState) => {
   try {
     const response = await axios.get(
-      `https://api.opendota.com/api/constants/hero_lore
+      `https://api.opendota.com/api/constants/hero_lore?api_key=b4888f99-95b4-4b8e-80bb-b1871752b696
       `
     );
 
@@ -26,7 +26,7 @@ export const getLoreHero = () => async (dispatch, getState) => {
 export const getHeroAbilities = () => async (dispatch, getState) => {
   try {
     const response = await axios.get(
-      `https://api.opendota.com/api/constants/abilities
+      `https://api.opendota.com/api/constants/abilities?api_key=b4888f99-95b4-4b8e-80bb-b1871752b696
       `
     );
 
