@@ -214,7 +214,7 @@ const HeroDetail = () => {
             <div>
               {/* Display only a portion of the lore */}
               <div className="text-white w-4/5 text-sm pt-2">
-                {showFullLore ? myHeroLore : `${myHeroLore.slice(0, 400)}...`}
+                {showFullLore ? myHeroLore : `${myHeroLore?.slice(0, 400)}...`}
               </div>
               {/* Render the "Read More" button */}
               {!showFullLore && (
